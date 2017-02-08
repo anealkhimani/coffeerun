@@ -18,12 +18,14 @@
   }
 
   Truck.prototype.printOrders = function() {
-    var customerIdArray = Object.keys(this.db.getAll());
-    // console.log(customerIdArray);
-    console.log('Truck #' + this.truckId + ' has pending orders:');
-    customerIdArray.forEach(function(id) {
-      console.log(this.db.get(id));
-    }.bind(this));
+    return this.db.getAll()
+      .then(function(orders) {
+        var customerIdArray = Object.keys(orders);
+        console.log('Truck #' + this.truckId + ' has pending orders:');
+        customerIdArray.forEach(function(id) {
+          console.log(orders[id]);
+        }.bind(this));
+      }.bind(this));
   };
 
   App.Truck = Truck;
